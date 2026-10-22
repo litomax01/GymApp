@@ -1,0 +1,123 @@
+/* GymFlow — identidad "suelo de gimnasio": hormigón, tinta verde-negra, cinta amarilla de señalización. */
+:root {
+  --paper: #eceee9;
+  --surface: #f8f9f6;
+  --ink: #14211c;
+  --ink-soft: #46564e;
+  --line: #c8cec5;
+  --tape: #f2c230;
+  --tape-ink: #14211c;
+  --go: #17744a;
+  --go-bg: #dcefe4;
+  --stop: #b8322a;
+  --stop-bg: #f6dedb;
+  --warn-bg: #fbefc6;
+  --radius: 4px;
+  --font-body: 'Barlow', system-ui, sans-serif;
+  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1rem/1.5 var(--font-body);
+}
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.1; margin: 0; letter-spacing: 0.01em; }
+h1 { font-size: 2.25rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.2rem; }
+p { margin: 0; }
+a { color: inherit; }
+
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; box-shadow: 0 0 0 5px var(--tape); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+
+.muted { color: var(--ink-soft); }
+.num { font-variant-numeric: tabular-nums; }
+
+/* ---------- Páginas ---------- */
+.page { padding: 1.5rem 1rem 3rem; max-width: 70rem; margin: 0 auto; }
+@media (min-width: 48rem) { .page { padding: 2rem 2rem 4rem; } }
+
+.page-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+.page-head p { color: var(--ink-soft); margin-top: 0.25rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  min-height: 2.75rem; padding: 0.5rem 1.1rem;
+  font: 600 1rem var(--font-body); text-decoration: none; cursor: pointer;
+  border: 2px solid var(--ink); border-radius: var(--radius);
+  background: var(--tape); color: var(--tape-ink);
+}
+.btn:hover:not(:disabled) { background: #ffd24a; }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn-quiet { background: transparent; color: var(--ink); }
+.btn-quiet:hover:not(:disabled) { background: var(--surface); }
+.btn-danger { background: transparent; color: var(--stop); border-color: var(--stop); }
+.btn-danger:hover:not(:disabled) { background: var(--stop-bg); }
+.btn-small { min-height: 2.25rem; padding: 0.25rem 0.75rem; font-size: 0.9rem; }
+.btn-link { background: none; border: 0; padding: 0; min-height: 0; text-decoration: underline; font-weight: 600; cursor: pointer; color: var(--ink); }
+
+/* ---------- Formularios ---------- */
+.form { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); align-items: start; }
+.field { display: grid; gap: 0.3rem; }
+.field.wide { grid-column: 1 / -1; }
+.field label, .field .label { font-weight: 600; font-size: 0.95rem; }
+.field input, .field select, .field textarea {
+  width: 100%; min-height: 2.75rem; padding: 0.5rem 0.75rem;
+  font: inherit; color: var(--ink); background: var(--surface);
+  border: 2px solid var(--ink-soft); border-radius: var(--radius);
+}
+.field textarea { min-height: 5rem; resize: vertical; }
+.field input[aria-invalid='true'], .field select[aria-invalid='true'] { border-color: var(--stop); }
+.field .hint { color: var(--ink-soft); font-size: 0.875rem; }
+.field .error { color: var(--stop); font-size: 0.9rem; font-weight: 500; }
+.form-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+/* ---------- Paneles y tablas ---------- */
+.panel { background: var(--surface); border: 2px solid var(--ink); border-radius: var(--radius); padding: 1.25rem; }
+.panel + .panel, .panel + .section, .section + .panel, .section + .section { margin-top: 1.5rem; }
+.section-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.75rem; }
+
+.table-wrap { overflow-x: auto; border-top: 2px solid var(--ink); }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-weight: 600; font-size: 0.9rem; color: var(--ink-soft); padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--ink-soft); white-space: nowrap; }
+td { padding: 0.7rem 0.75rem; border-bottom: 1px solid var(--line); vertical-align: middle; }
+tbody tr:hover { background: rgba(20, 33, 28, 0.04); }
+td.right, th.right { text-align: right; }
+
+/* ---------- Etiquetas de estado ---------- */
+.badge { display: inline-block; padding: 0.1rem 0.6rem; border-radius: 999px; font-weight: 600; font-size: 0.85rem; border: 1.5px solid currentColor; white-space: nowrap; }
+.badge-go { color: var(--go); background: var(--go-bg); }
+.badge-stop { color: var(--stop); background: var(--stop-bg); }
+.badge-warn { color: #6b5200; background: var(--warn-bg); }
+.badge-idle { color: var(--ink-soft); background: transparent; }
+
+/* ---------- Estados: carga, vacío, error ---------- */
+.state { padding: 2.5rem 1rem; text-align: center; color: var(--ink-soft); }
+.state strong { display: block; font: 700 1.4rem var(--font-display); color: var(--ink); margin-bottom: 0.25rem; }
+.state .btn { margin-top: 1rem; }
+.alert-box { border: 2px solid var(--stop); background: var(--stop-bg); border-radius: var(--radius); padding: 1rem; display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; justify-content: space-between; }
+.skeleton { background: linear-gradient(90deg, var(--line), #dde1da, var(--line)); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; border-radius: var(--radius); min-height: 1.2rem; }
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+/* ---------- Avisos ---------- */
+.toasts { position: fixed; z-index: 50; right: 1rem; bottom: 1rem; left: 1rem; display: grid; gap: 0.5rem; justify-items: end; pointer-events: none; }
+.toast { pointer-events: auto; display: flex; gap: 0.75rem; align-items: center; max-width: 28rem; padding: 0.7rem 1rem; background: var(--ink); color: #fff; border-left: 6px solid var(--tape); border-radius: var(--radius); }
+.toast-error { border-left-color: #ff7a6e; }
+.toast-close { background: none; border: 0; color: inherit; font-size: 1.4rem; line-height: 1; cursor: pointer; min-width: 2rem; min-height: 2rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

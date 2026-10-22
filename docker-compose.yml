@@ -1,0 +1,40 @@
+# Uso: cp .env.example .env  (rellena DB_PASSWORD y JWT_SECRET)  →  docker compose up --build
+# Demo con datos ficticios: SPRING_PROFILES_ACTIVE=demo docker compose up --build
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: gymflow
+      POSTGRES_USER: gymflow
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?define DB_PASSWORD en .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gymflow -d gymflow"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/gymflow
+      DB_USER: gymflow
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET:?define JWT_SECRET (>= 32 caracteres) en .env}
+      JWT_TTL_MINUTES: ${JWT_TTL_MINUTES:-480}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8088}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-}
+      DEMO_PASSWORD: ${DEMO_PASSWORD:-Admin123!}
+
+  web:
+    build: ./frontend
+    depends_on: [api]
+    ports:
+      - "8088:80"
+
+volumes:
+  pgdata:
