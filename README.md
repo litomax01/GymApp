@@ -3,7 +3,7 @@
 Gestión de gimnasios para recepción y administración: socios, membresías, cobros, control de acceso y un
 **radar de retención** que avisa de los socios que están a punto de abandonar.
 
-> Proyecto de portafolio. Registra cobros hechos fuera del sistema; **no procesa pagos ni custodia dinero**.
+> Registra cobros hechos fuera del sistema; **no procesa pagos ni custodia dinero**.
 
 ## El problema
 Muchos gimnasios pequeños llevan las cuotas en Excel: se cuela gente con la cuota vencida, los cobros se olvidan y
